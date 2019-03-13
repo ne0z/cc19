@@ -3,6 +3,9 @@
 import binascii
 import time
 
+# Make sure ASLR is disabled:
+#  $ echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
+
 if False:  # Set this to True to have the time to start and setup GDB
     try:
         while True:
