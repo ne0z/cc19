@@ -1,0 +1,28 @@
+# Create a python virtualenv named "ENV"
+$ virtualenv2 ENV
+
+# Activate it (enter into the environment)
+$ source ENV/bin/activate
+
+# From now on you can use pip install etc., and that will only
+# affect the virtual environment
+$ pip install pwntools
+
+# Deactivate it (exit)
+$ deactivate
+
+
+
+# Generate pwntools template
+$ pwn template ./1996 > crack.py
+
+# How to run crack the target under GDB
+./crack.py
+# The same, but also running GDB
+./crack.py LOCAL GDB
+
+# Interesting pwn functions to find the right
+# buffer size to arrive to the saved instruction
+# pointer.
+>> cyclic(100)
+>> cyclic_find("jaaa")
