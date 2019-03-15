@@ -26,3 +26,7 @@ $ pwn template ./1996 > crack.py
 # pointer.
 >> cyclic(100)
 >> cyclic_find("jaaa")
+
+
+# Some tips about pwntools
+https://github.com/Naetw/CTF-pwn-tips
