@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-g -fstack-protector -zexecstack -no-pie
+CFLAGS=-g -fstack-protector -zexecstack
 #-zexecstack
-#-no-pie
+# You can temporarily disable PIE to debug with GDB: add -no-pie
 
 safe_to_smash:
 	$(CC) $(CFLAGS) safe_to_smash.c -o safe_to_smash
