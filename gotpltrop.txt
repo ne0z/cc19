@@ -95,4 +95,8 @@ un eseguibile:
 
 Trovare i gadget che **non** contengono certi bytes
 
-    # ropper --type=rop -f /bin/ls -b 0x61
+    $ ropper --type=rop -f /bin/ls -b 0x61
+
+Trova direttamente una ropchain che esegue execve("/bin/sh", NULL);
+
+    $ ropper --type=rop -f /bin/ls --chain execve
