@@ -92,3 +92,7 @@ Trova tutti i gadget (single istruzioni) disponibili dentro ad
 un eseguibile:
 
     $ ropper --type=rop -f /bin/ls
+
+Trovare i gadget che **non** contengono certi bytes
+
+    # ropper --type=rop -f /bin/ls -b 0x61
