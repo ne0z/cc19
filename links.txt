@@ -1,1 +1,5 @@
-https://ropemporium.com/
+ROP:
+    https://ropemporium.com/
+
+Trovare gadget nella libc
+    https://github.com/david942j/one_gadget

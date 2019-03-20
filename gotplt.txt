@@ -1,0 +1,94 @@
+============ GOT: Global Offset Table ==============
+Le librerie dinamiche sono collegate a run-time. Motivazioni per le
+librerie dinamiche:
+ - si possono condividere (e.g. libc) tra tutti i
+programmi che la usano --> risparmio di memoria
+ - si possono cambiare le librerie senza cambiare i programmi; comodo
+   per fix di sicurezza.
+
+La exec() carica in memoria sia l'eseguibile che il caricatore dinamico
+(e.g., ld), e poi passa il controllo a quest'ultimo.
+
+Vedere l'interprete di un programma:
+    $ readelf -a /usr/bin/cat | grep interpreter
+
+Nelle librerie dinamiche ci possono essere tante funzioni (e.g., libc),
+non tutte utilizzate dall'eseguibile. Il caricatore dinamico potrebbe
+caricare tutte le funzioni che sono necessarie immediatamente.
+Per evitare di caricarle tutto all'inizio, il caricatore dinamico
+puo' usare la tecnica del lazy loading, tramite la quale i simboli
+necessari vengono caricati solo al primo utilizzo.
+
+    $ LD_DEBUG=all /usr/bin/cat /proc/self/maps
+
+Il lazy loading viene implementato tramite una sezione .plt aggiunta
+all'eseguibile, che contiene "trampolini" verso ogni possibile funzione
+di libreria.
+I trampolini vanno a leggere dalla GOT per capire dove saltare.
+
+Mostrare la sezione .plt di un eseguibile
+    $ objdump -j .plt -d -M intel backend
+
+La prima volta il trampolino salta al caricatore dinamico, che poi
+modifica il contenuto della GOT in modo che il trampolino da
+quel momento in poi salti alla vera funzione.
+
+In pwndbg il comando 'got' mostra il contenuto attuale della GOT.
+Simile comando per GEF.
+
+La GOT puo' essere modificata (tramite exploit) per fare in modo che
+il codice salti dove vogliamo noi. Questo permette di aggirare
+il problema di stack non eseguibile, ma richiede una vulnerabilita'
+diversa da un buffer overflow.
+Inoltre ovviamente dobbiamo saltare a qualche pezzo di codice che
+c'e' gia' da qualche parte nell'eseguibile (ma questo e' vero anche
+nel caso di buffer overflow).
+Se l'eseguibile e' compilato senza PIE (Position Independent Executable),
+la sezione .text e' caricata sempre agli stessi indirizzi, e lo
+stesso vale per la GOT. Quindi possiamo cercare di modificare la GOT
+a nostro piacimento.
+Questa tecnica non e' affetta da ASLR.
+Nota che ASLR come implementato su Linux non cambia l'ordine delle
+varie sezioni dell'eseguibile, ma solo un indirizzo base (questa e'
+una bella comodita', perche' gli offset fra le varie librerie rimangono
+costanti).
+
+Tra le varie cose, readelf -r mostra dove si trova la GOT.
+    $ readelf -r ./program
+
+
+================== RADARE2 ========================
+Disassemblare un programma, con varie analisi.
+    $ r2 ./program
+    >>> aaa
+    >>> pdf @ main
+    .....
+
+r2 capisce dove sono le variabili locali, tra le altre cose.
+Puo' essere utile anche disassemblare la libc.
+
+Guardare le stringhe inserite dal programmatore, e i loro
+indirizzi:
+
+    $ rabin2 -z ./program
+
+Guardare le funzioni di libreria che vengono invocate e
+dove vengono invocate:
+
+    $ rabin2 -i ./program
+
+
+================ ONE GADGET ====================
+Trova pezzi di codice che lanciano /bin/sh, con i vincoli
+associati su registri etc.
+
+    $ one_gadget /usr/lib/libc.so.6
+
+Fornisce indirizzi a cui saltare per ottenere una shell.
+
+
+=================== ROPPER =======================
+Trova tutti i gadget (single istruzioni) disponibili dentro ad
+un eseguibile:
+
+    $ ropper --type=rop -f /bin/ls

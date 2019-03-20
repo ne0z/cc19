@@ -1,0 +1,3 @@
+Install the following values:
+
+    ropper pwndbg radare2 gef-git
