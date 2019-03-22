@@ -21,10 +21,11 @@ necessari vengono caricati solo al primo utilizzo.
 
     $ LD_DEBUG=all /usr/bin/cat /proc/self/maps
 
-Il lazy loading viene implementato tramite una sezione .plt aggiunta
-all'eseguibile, che contiene "trampolini" verso ogni possibile funzione
-di libreria.
-I trampolini vanno a leggere dalla GOT per capire dove saltare.
+Il lazy loading viene implementato tramite una sezione .plt (Procedure
+Linkage Table) aggiunta all'eseguibile, che contiene "trampolini"
+verso ogni possibile funzione di libreria.
+I trampolini vanno a leggere dalla GOT (sezione dati .got.plt)
+per capire dove saltare.
 
 Mostrare la sezione .plt di un eseguibile
     $ objdump -j .plt -d -M intel backend

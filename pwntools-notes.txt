@@ -69,3 +69,18 @@ gef> vmmap
 #           so it must compute addresses for any memory access.
 #           PIE gives more protection, because there cannot be global
 #           variables or other any exploitable static addresses.
+#
+# The 'checksec' is available as a standalone program.
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Abilitare la generazione del core dump di un programma:
+
+    $ ulimit -c unlimited
+#
+# A questo punto e' possibile lanciare gdb passandogli
+# l'eseguibile ed il core dump, in modo da osservare lo
+# stato del programma nel momento del crash:
+
+    $ gdb ./program ./core.dump
