@@ -6,3 +6,6 @@ ROP:
 
 Trovare gadget nella libc
     https://github.com/david942j/one_gadget
+
+Zen hack (Giovanni Lagorio)
+    https://zenhack.it/
