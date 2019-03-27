@@ -9,3 +9,13 @@ Trovare gadget nella libc
 
 Zen hack (Giovanni Lagorio)
     https://zenhack.it/
+
+z3 exercise:
+    https://raw.githubusercontent.com/rosako/z3-crackme/master/crackme.c
+
+Obfuscation and deobfuscation
+    Javascript: www.jsfuck.com
+    Javascript: google jsunfuck
+    brainfuck language
+    Assembly movfuscator: con l'istruzione MOV si puo' fare tutto ...
+    Java: http://www.javadecompilers.com/
