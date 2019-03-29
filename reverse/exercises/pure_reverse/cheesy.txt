@@ -1,1 +1,11 @@
 Where will you find the flag?
+
+SOLUTION:
+This programs prints stuff encoded in Bas64.
+Just extract the user-written strings with
+  # rabin2 -z ./cheesy
+and find the string that is **not** printed on stdout by ./cheesy.
+    Z2lnZW17M2E1eV9SM3YzcjUxTjYhfQ
+
+Decode that with online tools and you'll get the flag
+    gigem{3a5y_R3v3r51N6!}

@@ -1,1 +1,27 @@
 Can you generate a valid product key for the validation program?
+
+SOLUTION
+Keys are 16 characters.
+Using ghidra, we see that a key is valid when the following formula is true
+
+    (sum % 0x24) == ord(key[15])
+
+with sum defined as the following:
+    sum = 0
+    for i in 1..15:
+        sum += i * ord(key[i-1] + 1)
+
+where ord(c) maps characters into numbers in the following way:
+    '0' --> 0
+    '1' --> 1
+    ...
+    '9' --> 9
+    'A' --> 10
+    'B' --> 11
+    ...
+    'Z' --> 36
+
+Now, if we choose key[i] == '0' for i in 0..14, we have ord(key[i]) = 0,
+and so the sum is simply the gauss sum --> sum = 15 * 16 / 2 = 120.
+Since 120 % 0x24 is 12, we need to pick key[15] == 'C'.
+One key is therefore 000000000000000C.
