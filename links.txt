@@ -20,3 +20,6 @@ Obfuscation and deobfuscation
     Assembly movfuscator: con l'istruzione MOV si puo' fare tutto ...
     Java: http://www.javadecompilers.com/
     Java online compiler and runtime: https://www.jdoodle.com/online-java-compiler
+
+Contests:
+    https://tamuctf.com/
