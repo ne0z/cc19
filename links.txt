@@ -25,4 +25,5 @@ Reverse:
     https://www.frida.re/docs/functions/
 
 Contests:
+    https://picoctf.com/
     https://tamuctf.com/
