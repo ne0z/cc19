@@ -21,5 +21,8 @@ Obfuscation and deobfuscation
     Java: http://www.javadecompilers.com/
     Java online compiler and runtime: https://www.jdoodle.com/online-java-compiler
 
+Reverse:
+    https://www.frida.re/docs/functions/
+
 Contests:
     https://tamuctf.com/
