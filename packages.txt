@@ -1,3 +1,5 @@
 Install the following values:
 
+    ltrace
     ropper pwndbg radare2 gef-git binwalk z3 python-z3
+    python-frida python-frida-tools

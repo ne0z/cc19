@@ -1,0 +1,4 @@
+Supply a correct key to the server to get the flag
+
+
+nc rev.tamuctf.com 8189

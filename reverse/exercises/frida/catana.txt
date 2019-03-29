@@ -1,0 +1,1 @@
+Something curious happened... a weird guy named Catana has created a secret message printer that uses a very complex algorithm. You and Santa's MechaGnomes have to put your great minds togheter and get the program to print the message a bit faster.

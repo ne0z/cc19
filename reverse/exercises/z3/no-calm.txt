@@ -1,0 +1,1 @@
+h3rcul35 and starlord were having a heated conversation and to c00l down the furious starlord, h3rcul35 gave him a binary and said "The binary takes each 'character' byte of the flag as argument. Given this info, grab the flag. I hope you dont get angry :P". Show h3rcul35 that you stayed c00l by finding the flag.
