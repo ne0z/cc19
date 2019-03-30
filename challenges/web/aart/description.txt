@@ -1,0 +1,7 @@
+Run the server with:
+docker-compose up
+
+Then, browse: http://127.0.0.1:8080/
+
+The sources of this website are contained in aart_sources.tgz (available to players)
+

@@ -1,0 +1,10 @@
+In the original challenge, you are given the binary. The binary is the original one from the competition.
+
+The goal is to write a repeatable exploit script to steal the flag (located at /challenge/flag, although it should just be flag in the current directory) remotely.
+
+To run the challenge locally:
+./docker-run.sh
+
+Then:
+nc localhost 31337
+

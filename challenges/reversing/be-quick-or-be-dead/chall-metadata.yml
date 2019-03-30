@@ -1,0 +1,18 @@
+-
+        name: be-quick-or-be-dead-1
+        ctf: picoCTF 2018
+        difficulty: easy
+        original_writeups: https://ctftime.org/task/6808
+        backup_writeups: writeup.pdf
+-
+        name: be-quick-or-be-dead-2
+        ctf: picoCTF 2018
+        difficulty: medium
+        original_writeups: https://ctftime.org/task/6831
+        backup_writeups: writeup.pdf
+-
+        name: be-quick-or-be-dead-3
+        ctf: picoCTF 2018
+        difficulty: hard
+        original_writeups: https://ctftime.org/task/6780
+        backup_writeups: writeup.pdf

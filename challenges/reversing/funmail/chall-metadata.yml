@@ -1,0 +1,12 @@
+-
+        name: funmail
+        ctf: TUCTF 2017
+        difficulty: warmup
+        original_writeups: https://ctftime.org/task/4979
+        backup_writeups: writeup-1.pdf
+-
+        name: funmail 2.0
+        ctf: TUCTF 2017
+        difficulty: easy
+        original_writeups: https://ctftime.org/task/4980
+        backup_writeups: writeup-2.pdf

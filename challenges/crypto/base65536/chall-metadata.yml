@@ -1,0 +1,7 @@
+name: Base65536
+ctf: INS'hAck 2018
+difficulty: medium
+original_writeups: https://jbzteam.github.io/inshack2018/base65535
+backup_writeups:
+        - writeup.pdf
+        - writeup.md

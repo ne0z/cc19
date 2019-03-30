@@ -1,0 +1,5 @@
+Can you exploit the basic bugs?
+
+nc 127.0.0.1 22230
+
+(use ./docker_run.sh to run the server locally)

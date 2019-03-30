@@ -1,0 +1,6 @@
+Would you mind briefly testing our new integer array implementation?
+
+nc 127.0.0.1 22228
+
+(use ./docker_run.sh to run the server locally)
+

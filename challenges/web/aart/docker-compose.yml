@@ -1,0 +1,22 @@
+version: '3'
+services:
+    db:
+        build: ./mysql
+        container_name: chall18-aart-db
+        restart: always
+        environment:
+            MYSQL_DATABASE: aart
+            MYSQL_USER: aart
+            MYSQL_PASSWORD: a_long_and_secure_mysql_password
+            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+            MYSQL_PORT: 3306
+    challenge:
+        build: .
+        container_name: chall18-aart-php
+        ports:
+            - 8080:80
+        restart: always
+        depends_on:
+            - db
+        links:
+            - db

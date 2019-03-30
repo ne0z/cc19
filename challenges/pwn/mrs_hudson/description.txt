@@ -1,0 +1,9 @@
+The goal is to write a repeatable exploit script to steal the flag
+(located at `/challenge/flag`) remotely.
+
+To run the challenge locally:
+./docker-run.sh
+
+Then:
+nc localhost 31337
+

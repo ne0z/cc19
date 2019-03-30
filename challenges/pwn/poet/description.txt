@@ -1,0 +1,6 @@
+We are looking for the poet of the year....
+
+nc 127.0.0.1 22223
+
+(use ./docker_run.sh to run the server locally)
+

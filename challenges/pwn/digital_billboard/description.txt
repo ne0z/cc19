@@ -1,0 +1,6 @@
+We bought a new Digital Billboard for CTF advertisement:
+
+nc 127.0.0.1 1337
+
+(use ./docker_run.sh to run the server locally)
+

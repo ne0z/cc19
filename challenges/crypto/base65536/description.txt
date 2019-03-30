@@ -1,0 +1,6 @@
+Base 64 is too mainstream but we could not manage to decide on the final encoding scheme...
+
+http://127.0.0.1:5000/
+
+(use ./docker_run.sh to run the server locally)
+

@@ -1,0 +1,7 @@
+Fun with flags: http://127.0.0.1:1234
+
+Flag is at /flag
+
+(use ./docker_run.sh to run the server locally)
+
+

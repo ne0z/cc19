@@ -1,0 +1,6 @@
+Wrapping gifts is now even more fun! Gift Wrapping Factory 2.0:
+
+nc 127.0.0.1 1341
+
+(use ./docker_run.sh to run the server locally)
+

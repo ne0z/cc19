@@ -1,0 +1,9 @@
+We found a website used to register hacked IoT like security cameras or internet boxes.
+I'd like to login as the Command And Control but I can not do it.. Would you help me?
+
+The sources are available, see cnc.zip; then,
+
+http://127.0.0.1:8080
+
+(use ./docker_run.sh to run the server locally)
+

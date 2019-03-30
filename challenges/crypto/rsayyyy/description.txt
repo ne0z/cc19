@@ -1,0 +1,6 @@
+This challenge is designed to give an overview
+of the RSA algorithm. If you have a team member
+that is less familiar with RSA that wants to be,
+give this challenge to them. This might be useful.
+
+nc 127.0.0.1 31339

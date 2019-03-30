@@ -1,0 +1,7 @@
+It's a classic
+
+http://127.0.0.1:8082
+
+(use ./docker_run.sh to run the server locally)
+
+

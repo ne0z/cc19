@@ -1,0 +1,86 @@
+<html>
+<head>
+<link href="tabulator.min.css" rel="stylesheet">
+<script type="text/javascript" src="tabulator.min.js"></script>
+</head>
+<body>
+<h1>Training challenges for CyberChallenge.IT 2019</h1>
+<p>
+Each folder contains:
+<ul>
+            <li>a <i>description(s).txt</i> file that describe the challenge(s) and how to run them
+            <li>a <i>chall-metadata.yml</i> with metadata that is used to automagically create the following list
+</ul>
+</p>
+<div id="challenge-table"></div>
+<script>
+var tableData = [
+
+{name: "<a href=\"./reversing/be-quick-or-be-dead\">be-quick-or-be-dead-1</a>", ctf: "picoCTF 2018", author: "", category: "reversing", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/6808">Original</a> <a href="./reversing/be-quick-or-be-dead/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/be-quick-or-be-dead\">be-quick-or-be-dead-2</a>", ctf: "picoCTF 2018", author: "", category: "reversing", tags: "", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/6831">Original</a> <a href="./reversing/be-quick-or-be-dead/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/be-quick-or-be-dead\">be-quick-or-be-dead-3</a>", ctf: "picoCTF 2018", author: "", category: "reversing", tags: "", difficulty: "hard", writeup: '<a href="https://ctftime.org/task/6780">Original</a> <a href="./reversing/be-quick-or-be-dead/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/catana\">catana</a>", ctf: "XmasCTF 2018", author: "littlewho + Gabies", category: "reversing", tags: "", difficulty: "easy", writeup: '<a href="https://zenhack.it/writeups/XmasCTF2018/catana">Original</a> <a href="./reversing/catana/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/keygen-me-1\">keygen-me-1</a>", ctf: "picoCTF 2018", author: "", category: "reversing", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/6856">Original</a> <a href="./reversing/keygen-me-1/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/morph\">morph</a>", ctf: "34C3 CTF", author: "", category: "reversing", tags: "", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/5147">Original</a> <a href="./reversing/morph/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/my_first_reverse\">my first reverse</a>", ctf: "GreHack CTF 2016", author: "", category: "reversing", tags: "", difficulty: "warmup", writeup: '<a href="https://ctftime.org/task/3104">Original</a> <a href="./reversing/my_first_reverse/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/getit\">GetIt</a>", ctf: "SharifCTF 7", author: "", category: "reversing", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/3199">Original</a> <a href="./reversing/getit/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/jump_around\">Jump Around</a>", ctf: "SHA2017 Junior CTF", author: "", category: "reversing", tags: "", difficulty: "warmup", writeup: '<a href="https://ctftime.org/task/4451">Original</a> <a href="./reversing/jump_around/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/radix\">Radix's Terminal</a>", ctf: "picoCTF 2018", author: "", category: "reversing", tags: "", difficulty: "warmup", writeup: '<a href="https://ctftime.org/task/6853">Original</a> <a href="./reversing/radix/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/funmail\">funmail</a>", ctf: "TUCTF 2017", author: "", category: "reversing", tags: "", difficulty: "warmup", writeup: '<a href="https://ctftime.org/task/4979">Original</a> <a href="./reversing/funmail/writeup-1.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/funmail\">funmail 2.0</a>", ctf: "TUCTF 2017", author: "", category: "reversing", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/4980">Original</a> <a href="./reversing/funmail/writeup-2.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/EzReverse\">EzReverse</a>", ctf: "EasyCTF IV (2018)", author: "", category: "reversing", tags: "", difficulty: "easy", writeup: '<a href="https://github.com/RedEcho/CTF_Challenges/blob/master/EasyCTF_IV/5365_EzReverse/WriteUp/Writeup.md">Original</a> <a href="./reversing/EzReverse/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/cpp_is_awesome\">C++ is awesome</a>", ctf: "AlexCTF 2017", author: "", category: "reversing", tags: "", difficulty: "easy", writeup: '<a href="http://drizbit.com/post/alexctf-reverse-engineering-2017/">Original</a> <a href="./reversing/cpp_is_awesome/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./reversing/quackme\">QuackMe</a>", ctf: "picoCTF 2018", author: "", category: "reversing", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/6848">Original</a> <a href="./reversing/quackme/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./pwn/stringmaster1\">stringmaster1</a>", ctf: "35c3 Junior CTF", author: "Katharina M\u00e4nnle", category: "pwn", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/7442">Original</a> <a href="./pwn/stringmaster1/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/tharina/35c3ctf"},
+{name: "<a href=\"./pwn/babypwn\">babypwn</a>", ctf: "nullcon HackIM 2019", author: "", category: "pwn", tags: "", difficulty: "hard", writeup: '<a href="https://devel0pment.de/?p=1191">Original</a> <a href="./pwn/babypwn/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./pwn/mrs_hudson\">Mrs. Hudson</a>", ctf: "ASIS CTF Finals 2017", author: "", category: "pwn", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/4589">Original</a> <a href="./pwn/mrs_hudson/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/adamdoupe/ctf-training"},
+{name: "<a href=\"./pwn/sum\">sum</a>", ctf: "35c3 Junior CTF", author: "Katharina M\u00e4nnle", category: "pwn", tags: "", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/7443">Original</a> <a href="./pwn/sum/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/tharina/35c3ctf"},
+{name: "<a href=\"./pwn/digital_billboard\">Digital Billboard</a>", ctf: "34c3 Junior CTF", author: "Katharina M\u00e4nnle", category: "pwn", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/5153">Original</a> <a href="./pwn/digital_billboard/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/tharina/34c3ctf"},
+{name: "<a href=\"./pwn/poet\">poet</a>", ctf: "35c3 Junior CTF", author: "Katharina M\u00e4nnle", category: "pwn", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/7418">Original</a> <a href="./pwn/poet/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/tharina/35c3ctf"},
+{name: "<a href=\"./pwn/stringmaster2\">stringmaster2</a>", ctf: "35c3 Junior CTF", author: "Katharina M\u00e4nnle", category: "pwn", tags: "", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/7444">Original</a> <a href="./pwn/stringmaster2/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/tharina/35c3ctf"},
+{name: "<a href=\"./pwn/gift_wrapping_factory_2.0\">Gift Wrapping Factory 2.0</a>", ctf: "34c3 Junior CTF", author: "Katharina M\u00e4nnle", category: "pwn", tags: "", difficulty: "hard", writeup: '<a href="https://ctftime.org/task/5163">Original</a> <a href="./pwn/gift_wrapping_factory_2.0/writeup.pdf">Backup</a> ', notes: "offsets different from the ones in the writeup; see exploit.py; sources https://github.com/tharina/34c3ctf"},
+{name: "<a href=\"./pwn/smashme\">smashme</a>", ctf: "DEF CON CTF Qualifier 2017", author: "", category: "pwn", tags: "", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/4107">Original</a> <a href="./pwn/smashme/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/adamdoupe/ctf-training"},
+{name: "<a href=\"./pwn/arraymaster1\">arraymaster1</a>", ctf: "35c3 Junior CTF", author: "Katharina M\u00e4nnle", category: "pwn", tags: "", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/7447">Original</a> <a href="./pwn/arraymaster1/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/tharina/35c3ctf"},
+{name: "<a href=\"./pwn/1996\">1996</a>", ctf: "35c3 Junior CTF", author: "Katharina M\u00e4nnle", category: "pwn", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/7426">Original</a> <a href="./pwn/1996/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/tharina/35c3ctf"},
+{name: "<a href=\"./pwn/gift_wrapping_factory\">Gift Wrapping Factory</a>", ctf: "34c3 Junior CTF", author: "Katharina M\u00e4nnle", category: "pwn", tags: "", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/5161">Original</a> <a href="./pwn/gift_wrapping_factory/writeup.pdf">Backup</a> ', notes: "offsets different from the ones in the writeup; see exploit.py; sources https://github.com/tharina/34c3ctf"},
+{name: "<a href=\"./pwn/arraymaster2\">arraymaster2</a>", ctf: "35c3 Junior CTF", author: "Katharina M\u00e4nnle", category: "pwn", tags: "", difficulty: "hard", writeup: '<a href="https://ctftime.org/task/7448">Original</a> <a href="./pwn/arraymaster2/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/tharina/35c3ctf"},
+{name: "<a href=\"./web/smartcat1\">smartcat1</a>", ctf: "Insomni'Hack Teaser 2016", author: "grimmlin", category: "web", tags: "", difficulty: "easy", writeup: '<a href="https://toh.necst.it/insomnihack/web/smartcat/">Original</a> <a href="./web/smartcat1/writeup.pdf">Backup</a> ', notes: "Sources https://ring0.lol/posts/2016/01/18/insomnihack-declawing-smartcat1-and-smartcat2/"},
+{name: "<a href=\"./web/crimemail\">Crimemail</a>", ctf: "INS'hAck 2018", author: "", category: "web", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/5738">Original</a> <a href="./web/crimemail/writeup.pdf">Backup</a> <a href="./web/crimemail/writeup.md">Backup 2</a> ', notes: "Sources https://github.com/HugoDelval/inshack-2018"},
+{name: "<a href=\"./web/ajax_not_borax\">ajax_not_borax</a>", ctf: "NeverLAN-CTF 2018", author: "", category: "web", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/5452">Original</a> <a href="./web/ajax_not_borax/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/NeverLAN-CTF/2018_ajax_not_borax"},
+{name: "<a href=\"./web/console\">console</a>", ctf: "NeverLAN-CTF 2019", author: "", category: "web", tags: "", difficulty: "warmup", writeup: '<a href="https://ctftime.org/task/7537">Original</a> <a href="./web/console/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/NeverLAN-CTF/console"},
+{name: "<a href=\"./web/flags\">flags</a>", ctf: "35c3 Junior CTF", author: "FKT", category: "web", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/7414">Original</a> <a href="./web/flags/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/fkt/35c3ctf-junior"},
+{name: "<a href=\"./web/saltfish\">saltfish</a>", ctf: "35c3 Junior CTF", author: "FKT", category: "web", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/7437">Original</a> <a href="./web/saltfish/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/fkt/35c3ctf-junior"},
+{name: "<a href=\"./web/ocr\">OCR</a>", ctf: "INS'hAck 2018", author: "", category: "web", tags: "", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/5757">Original</a> <a href="./web/ocr/writeup.md">Backup</a> ', notes: "Sources https://github.com/HugoDelval/inshack-2018"},
+{name: "<a href=\"./web/aart\">AArt</a>", ctf: "2015 GITS CTF", author: "", category: "web", tags: "", difficulty: "easy", writeup: '<a href="https://kitctf.de/writeups/gits2015/aart">Original</a> <a href="./web/aart/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./web/cookie-monster\">Cookie monster</a>", ctf: "NeverLAN-CTF 2019", author: "", category: "web", tags: "", difficulty: "warmup", writeup: '<a href="https://ctftime.org/task/7534">Original</a> <a href="./web/cookie-monster/writeup.pdf">Backup</a> ', notes: "Sources https://github.com/NeverLAN-CTF/Cookie_Monster"},
+{name: "<a href=\"./crypto/block\">block</a>", ctf: "PicoCTF 2014", author: "", category: "crypto", tags: "", difficulty: "medium", writeup: '<a href="https://ehsandev.com/pico2014/cryptography/block.html">Original</a> <a href="./crypto/block/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./crypto/headstails\">HeadsTails</a>", ctf: "INS'hAck 2017", author: "", category: "crypto", tags: "", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/3863">Original</a> <a href="./crypto/headstails/writeup.md">Backup</a> ', notes: "Sources https://github.com/HugoDelval/inshack-2017"},
+{name: "<a href=\"./crypto/rsa16m\">RSA16M</a>", ctf: "INS'hAck 2017", author: "", category: "crypto", tags: "", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/3860">Original</a> <a href="./crypto/rsa16m/writeup.md">Backup</a> ', notes: "Sources https://github.com/HugoDelval/inshack-2017"},
+{name: "<a href=\"./crypto/rsayyyy\">RSAyyyy</a>", ctf: "TUCTF 2018", author: "", category: "crypto", tags: "", difficulty: "warmup", writeup: '<a href="https://github.com/F0rKb0m8/ctf-write-ups-2018/tree/master/tuctf-2018/crypto/crypt-RSAyyyy-358">Original</a> <a href="./crypto/rsayyyy/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./crypto/exclusive_or\">Exclusive or...</a>", ctf: "SHA2017 Junior CTF", author: "", category: "crypto", tags: "", difficulty: "warmup", writeup: '<a href="https://ctftime.org/task/4455">Original</a> <a href="./crypto/exclusive_or/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./crypto/simpledes\">simpleDES</a>", ctf: "TAMUctf 18", author: "", category: "crypto", tags: "", difficulty: "medium", writeup: '<a href="https://gist.github.com/vonKrafft/9b795e13c7105f5135910eeb0f7def51">Original</a> <a href="./crypto/simpledes/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./crypto/readyxornot\">readyXORnot</a>", ctf: "TAMUctf 18", author: "", category: "crypto", tags: "", difficulty: "warmup", writeup: '<a href="https://unicorn.university/tamuctf/2018/2018/01/26/xornot.html">Original</a> <a href="./crypto/readyxornot/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./crypto/valley_of_fear\">The valley of fear</a>", ctf: "PicoCTF 2014", author: "", category: "crypto", tags: "", difficulty: "warmup", writeup: '<a href="https://github.com/ctfs/write-ups-2014/tree/master/pico-ctf-2014/crypto/the-valley-of-fear-20">Original</a> <a href="./crypto/valley_of_fear/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./crypto/top\">top</a>", ctf: "34c3 Junior CTF", author: "", category: "crypto", tags: "", difficulty: "easy", writeup: '<a href="https://ctftime.org/task/5162">Original</a> <a href="./crypto/top/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./crypto/base65536\">Base65536</a>", ctf: "INS'hAck 2018", author: "", category: "crypto", tags: "", difficulty: "medium", writeup: '<a href="https://jbzteam.github.io/inshack2018/base65535">Original</a> <a href="./crypto/base65536/writeup.pdf">Backup</a> <a href="./crypto/base65536/writeup.md">Backup 2</a> ', notes: ""},
+{name: "<a href=\"./crypto/cnc\">CNC</a>", ctf: "INS'hAck 2017", author: "", category: "crypto", tags: "web", difficulty: "medium", writeup: '<a href="https://ctftime.org/task/3862">Original</a> <a href="./crypto/cnc/writeup.md">Backup</a> ', notes: "Sources https://github.com/HugoDelval/inshack-2017"},
+{name: "<a href=\"./crypto/alphabet_soup\">Alphabet Soup</a>", ctf: "NeverLAN CTF 2019", author: "", category: "crypto", tags: "", difficulty: "warmup", writeup: '<a href="https://ctftime.org/task/7610">Original</a> <a href="./crypto/alphabet_soup/writeup.pdf">Backup</a> ', notes: ""},
+{name: "<a href=\"./crypto/repeated_xor\">repeated xor</a>", ctf: "PicoCTF 2014", author: "", category: "crypto", tags: "", difficulty: "easy", writeup: '<a href="https://ehsandev.com/pico2014/cryptography/repeated_xor.html">Original</a> <a href="https://github.com/in-s-ane/picoctf-2014/blob/master/Repeated%20XOR-70/solution.txt">Original 2</a> <a href="./crypto/repeated_xor/writeup1.pdf">Backup</a> <a href="./crypto/repeated_xor/writeup2.txt">Backup 2</a> ', notes: ""},
+
+        ]
+        var table = new Tabulator("#challenge-table", {
+            data: tableData,
+            layout: 'fitDataFill',
+            selectable: false,
+            columns: [
+                {title: 'name', field:'name', formatter: 'html'},
+                {title: 'ctf', field:'ctf'},
+                {title: 'author', field:'author'},
+                {title: 'category', field: 'category'},
+                {title: 'tags', field: 'tags'},
+                {title: 'difficulty', field: 'difficulty'},
+                {title: 'writeup', field: 'writeup', formatter: 'html'},
+                {title: 'notes', field: 'notes'},
+            ],
+        });
+</script><p>Total challenges: 50; note: you can sort the list by clicking on column names</body></html>

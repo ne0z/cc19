@@ -1,0 +1,7 @@
+name: smashme
+ctf: DEF CON CTF Qualifier 2017
+difficulty: medium
+original_writeups: https://ctftime.org/task/4107
+backup_writeups: writeup.pdf
+notes: Sources https://github.com/adamdoupe/ctf-training
+

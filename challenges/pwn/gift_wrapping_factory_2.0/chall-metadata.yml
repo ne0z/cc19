@@ -1,0 +1,8 @@
+name: Gift Wrapping Factory 2.0
+ctf: 34c3 Junior CTF
+author: Katharina Männle
+difficulty: hard
+original_writeups: https://ctftime.org/task/5163
+backup_writeups: writeup.pdf
+notes: offsets different from the ones in the writeup; see exploit.py; sources https://github.com/tharina/34c3ctf
+

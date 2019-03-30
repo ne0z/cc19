@@ -1,0 +1,10 @@
+name: repeated xor
+ctf: PicoCTF 2014
+difficulty: easy
+original_writeups:
+        - https://ehsandev.com/pico2014/cryptography/repeated_xor.html
+        - https://github.com/in-s-ane/picoctf-2014/blob/master/Repeated%20XOR-70/solution.txt
+backup_writeups:
+        - writeup1.pdf
+        - writeup2.txt
+

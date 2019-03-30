@@ -1,0 +1,6 @@
+The first cryptography challenge of this years TAMUCTF event reads:
+
+original data: "El Psy Congroo"
+encrypted data: "IFhiPhZNYi0KWiUcCls="
+encrypted flag: "I3gDKVh1Lh4EVyMDBFo="
+The flag is not in the traditional gigem{flag} format.
