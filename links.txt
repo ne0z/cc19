@@ -1,3 +1,5 @@
+======================== BINARY ================================
+
 x86 assembly:
     http://www.cs.virginia.edu/~evans/cs216/guides/x86.html
 
@@ -27,3 +29,10 @@ Reverse:
 Contests:
     https://picoctf.com/
     https://tamuctf.com/
+
+
+
+======================== CRYPTO ================================
+
+Contests:
+    http://overthewire.org/wargames/krypton/krypton0.html

