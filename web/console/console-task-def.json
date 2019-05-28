@@ -1,0 +1,43 @@
+{
+  "requiresAttributes": [],
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:067416812167:task-definition/console:1",
+  "status": "ACTIVE",
+  "revision": 1,
+  "containerDefinitions": [
+    {
+      "volumesFrom": [],
+      "memory": 128,
+      "extraHosts": null,
+      "dnsServers": null,
+      "disableNetworking": null,
+      "dnsSearchDomains": null,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8082,
+          "protocol": "tcp"
+        }
+      ],
+      "hostname": null,
+      "essential": true,
+      "entryPoint": null,
+      "mountPoints": [],
+      "name": "console",
+      "ulimits": null,
+      "dockerSecurityOptions": null,
+      "environment": [],
+      "links": null,
+      "workingDirectory": null,
+      "readonlyRootFilesystem": null,
+      "image": "neverlanctf/console",
+      "command": null,
+      "user": null,
+      "dockerLabels": null,
+      "logConfiguration": null,
+      "cpu": 1,
+      "privileged": null
+    }
+  ],
+  "volumes": [],
+  "family": "console"
+}
